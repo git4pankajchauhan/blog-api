@@ -13,7 +13,7 @@ Router.get('/', async (req, res) => {
 });
 
 // Get Single Post by id
-Router.get('/:id', async (req, res) => {
+Router.get('/getsingle/:id', async (req, res) => {
   try {
     const postdata = await Post.findById(req.params.id);
     res.status(200).json(postdata);
@@ -23,7 +23,7 @@ Router.get('/:id', async (req, res) => {
 });
 
 // SEARCH
-Router.get('/search/:tag', async (req, res) => {
+Router.get('/:tag', async (req, res) => {
   try {
     const regex = new RegExp(req.params.tag, 'i');
     const postdata = await Post.aggregate([{ $match: { tags: regex } }]);
