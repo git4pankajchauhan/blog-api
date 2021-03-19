@@ -2,6 +2,7 @@ const express = require('express');
 const Router = express.Router();
 const User = require('../Models/User');
 const bcrypt = require('bcryptjs');
+const session = require('express-session');
 
 // Signup
 Router.post('/signup', async (req, res) => {
@@ -18,6 +19,15 @@ Router.post('/signup', async (req, res) => {
   }
 });
 
+// Check If user Loged in or not
+Router.get('/login', (req, res) => {
+  if (req.session.user) {
+    res.send({ loggedIn: true, user: req.session.user });
+  } else {
+    res.send({ loggedIn: false });
+  }
+});
+
 // Login
 Router.post('/login', async (req, res) => {
   try {
@@ -27,13 +37,15 @@ Router.post('/login', async (req, res) => {
     if (useremail) {
       bcrypt.compare(password, useremail.password, (error, response) => {
         if (response) {
-          res.status(200).json({ user: { id: useremail._id, name: useremail.name }, status: true });
+          req.session.user = { user: { id: useremail._id, name: useremail.name } };
+          console.log(req.session.user);
+          res.status(200).json({ message: 'Login Success', status: true });
         } else {
           res.status(200).json({ message: 'Invalid Login Details', status: false });
         }
       });
     } else {
-      res.status(200).json({ message: 'Invalid Login Details', status: false });
+      res.status(200).json({ message: 'Invalid Login Detailsaa', status: false });
     }
   } catch (error) {
     res.status(400).json({ message: `caught the error: ${error}`, status: false });
