@@ -5,8 +5,8 @@ const Post = require('../Models/Post');
 // Get All Post
 Router.get('/', async (req, res) => {
   try {
-    const Post = await Post.find();
-    res.status(200).json(Post);
+    const postdata = await Post.find();
+    res.status(200).json(postdata);
   } catch (error) {
     res.status(400).json({ message: `caught the error: ${error}`, status: false });
   }
@@ -15,8 +15,8 @@ Router.get('/', async (req, res) => {
 // Get Single Post by id
 Router.get('/:id', async (req, res) => {
   try {
-    const Post = await Post.findById(req.params.id);
-    res.status(200).json(Post);
+    const postdata = await Post.findById(req.params.id);
+    res.status(200).json(postdata);
   } catch (error) {
     res.status(400).json({ message: `caught the error: ${error}`, status: false });
   }
@@ -26,8 +26,8 @@ Router.get('/:id', async (req, res) => {
 Router.get('/search/:tag', async (req, res) => {
   try {
     const regex = new RegExp(req.params.tag, 'i');
-    const Post = await Post.aggregate([{ $match: { tags: regex } }]);
-    res.status(200).json(Post);
+    const postdata = await Post.aggregate([{ $match: { tags: regex } }]);
+    res.status(200).json(postdata);
   } catch (error) {
     res.status(400).json({ message: `caught the error: ${error}`, status: false });
   }
@@ -36,13 +36,13 @@ Router.get('/search/:tag', async (req, res) => {
 // INSERT
 Router.post('/', async (req, res) => {
   try {
-    const post = new Post({
+    const postdata = new Post({
       title: req.body.title,
       sub_title: req.body.sub_title,
       tags: req.body.tags,
       content: req.body.content,
     });
-    await post.save();
+    await postdata.save();
     res.status(201).json({ message: 'Post Added Successfully', status: true });
   } catch (error) {
     res.status(400).json({ message: `caught the error: ${error}`, status: false });
