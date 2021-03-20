@@ -2,7 +2,6 @@ const express = require('express');
 const Router = express.Router();
 const User = require('../Models/User');
 const bcrypt = require('bcryptjs');
-const session = require('express-session');
 
 // Signup
 Router.post('/signup', async (req, res) => {
@@ -37,7 +36,7 @@ Router.post('/login', async (req, res) => {
     if (useremail) {
       bcrypt.compare(password, useremail.password, (error, response) => {
         if (response) {
-          req.session.user = { user: { id: useremail._id, name: useremail.name } };
+          req.session.user = { id: useremail._id, name: useremail.name };
           console.log(req.session.user);
           res.status(200).json({ message: 'Login Success', status: true });
         } else {
