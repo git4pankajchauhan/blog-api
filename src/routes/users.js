@@ -5,13 +5,13 @@ const bcrypt = require('bcryptjs');
 
 // Signup
 Router.post('/signup', async (req, res) => {
-  const userdata = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-  });
-  await userdata.save();
   try {
+    const userdata = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    });
+    await userdata.save();
     res.status(201).json({ message: 'Registration Successfully', status: true });
   } catch (error) {
     res.status(400).json({ message: `caught the error: ${error}`, status: false });
@@ -25,6 +25,12 @@ Router.get('/login', (req, res) => {
   } else {
     res.send({ loggedIn: false });
   }
+});
+
+// Check If user Loged in or not
+Router.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.send({ loggedIn: false });
 });
 
 // Login
