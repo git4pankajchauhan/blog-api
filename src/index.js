@@ -6,7 +6,6 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const jwt = require('jsonwebtoken')
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -30,7 +29,7 @@ app.use(bodyParser.json())
 app.use(
   session({
     key: 'userId',
-    secret: 'pankajchauhan',
+    secret: process.env.SESSION_SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: {
