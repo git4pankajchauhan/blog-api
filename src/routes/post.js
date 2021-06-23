@@ -38,12 +38,12 @@ Router.post('/', async (req, res) => {
   try {
     const postdata = new Post({
       title: req.body.title,
-      sub_title: req.body.sub_title,
+      subTitle: req.body.subTitle,
       tags: req.body.tags,
-      content: req.body.content,
+      description: req.body.description,
     });
-    await postdata.save();
-    res.status(201).json({ message: 'Post Added Successfully', status: true });
+    const result = await postdata.save();
+    res.status(201).json({ message: 'Post Added Successfully', status: true, lastpost: result });
   } catch (error) {
     res.status(400).json({ message: `caught the error: ${error}`, status: false });
   }
@@ -57,9 +57,9 @@ Router.patch('/:id', async (req, res) => {
       {
         $set: {
           title: req.body.title,
-          sub_title: req.body.sub_title,
+          subTitle: req.body.subTitle,
           tags: req.body.tags,
-          content: req.body.content,
+          description: req.body.description,
         },
       }
     );

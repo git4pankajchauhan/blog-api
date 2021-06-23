@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
   title: String,
-  sub_title: String,
+  subTitle: String,
   tags: String,
-  content: String,
+  description: String,
 });
 
 module.exports = mongoose.model('posts', PostSchema);
