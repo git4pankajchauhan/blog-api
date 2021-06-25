@@ -49,7 +49,6 @@ Router.get('/user', auth, async (req, res) => {
       name: user.name,
       email: user.email,
     }
-    console.log(response)
     res.status(200).json({ user: response })
   } catch (e) {
     res.status(400).json({ error: e.message })
