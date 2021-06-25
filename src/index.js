@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000
 
 // Import Routes
 const Post = require('./routes/post')
-const User = require('./routes/user')
+const User = require('./routes/auth')
 
 // Middleware
 // app.use(cors());
@@ -26,21 +26,21 @@ app.use(
 app.use(cookieParser())
 app.use(bodyParser.json())
 
-app.use(
-  session({
-    key: 'userId',
-    secret: process.env.SESSION_SECRET_KEY,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 60 * 60 * 24 * 30,
-    },
-  })
-)
+// app.use(
+//   session({
+//     key: 'userId',
+//     secret: process.env.SESSION_SECRET_KEY,
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//       expires: 60 * 60 * 24 * 30,
+//     },
+//   })
+// )
 
 // Middleware Route
 app.use('/post', Post)
-app.use('/user', User)
+app.use('/auth', User)
 
 // listening Server
 app.listen(PORT, () => {
